@@ -199,3 +199,22 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' '
     "chatUserName": "jack"
 }
 ```
+### Deploy Using Docker
+
+++ - Install Docker:
+```
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+apt-get update
+apt-get install docker-ce
+```
+++ - Build:
+```
+sudo docker build -t springio/gs-spring-boot-docker .
+```
+
+++ - Deploy:
+
+```
+sudo docker run -d -p 8086:8086 springio/gs-spring-boot-docker
+```
