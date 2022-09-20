@@ -20,4 +20,6 @@ public interface AgoraChatService {
      * @return TokenInfo
      */
     TokenInfo getAgoraChatUserTokenWithAccount(AppUserInfo appUserInfo);
+
+    String getChatToken(String chatUserName);
 }

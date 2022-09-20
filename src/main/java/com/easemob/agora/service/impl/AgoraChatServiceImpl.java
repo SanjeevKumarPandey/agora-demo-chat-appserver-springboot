@@ -46,6 +46,28 @@ public class AgoraChatServiceImpl implements AgoraChatService {
         agoraChatAppTokenCache = CacheBuilder.newBuilder().maximumSize(1).expireAfterWrite(1, TimeUnit.DAYS).build();
     }
 
+    @Override
+    public String getChatToken(String chatUserName) {
+        if (!StringUtils.hasText(appid) || !StringUtils.hasText(appcert)) {
+            return "appid or appcert is not empty";
+        }
+        if (!StringUtils.hasText(appkey) || !StringUtils.hasText(domain)) {
+            return "appkey or domain is not empty";
+        }
+        if (!appkey.contains("#")) {
+            return "appkey is illegal";
+        }
+        if (!StringUtils.hasText(chatUserName)) {
+            return "chatUserName is not empty";
+        }
+        ChatTokenBuilder2 builder = new ChatTokenBuilder2();
+        String chatUserUuid = getChatUserUuid(chatUserName);
+        if (chatUserUuid == null) {
+            chatUserUuid = registerAgoraChatUser(chatUserName);
+        }
+        return builder.buildUserToken(appid, appcert, chatUserUuid, expirePeriod);
+    }
+
     /**
      * Register a agoraChat user for user account and password is 123
      * @param chatUserName chatUserName
